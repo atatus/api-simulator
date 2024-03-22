@@ -6,7 +6,7 @@ Simulate API requests based on sample api data.
 
 This sample JSON file `payload-sample.json` demonstrates how to structure requests for different HTTP methods, including GET and POST, with placeholders in the URL path that will be replaced with fake data by the script. The `headers` and `body` fields are optional and can be used to customize the request headers and body content.
 
-* Create a Virtual Environment and Install python dependencies
+* Create a Virtual Environment and Install python3 dependencies
 
 ```bash
 python3 -m venv env
@@ -17,7 +17,7 @@ pip install -r requirements.txt
 * Run simulator with sample payloads.
 
 ```bash
-python simulator.py --file payload-sample.json --global_domain https://api.example.com
+python3 simulator.py --file payload-sample.json --global_domain https://api.example.com
 ```
 
 **Arguments**
@@ -40,7 +40,7 @@ This script accepts several command-line arguments to customize its behavior. He
 To change the number of requests per minute, use the `--requests_per_minute` argument.
 
 ```bash
-python simulator.py --file payload-sample.json --requests_per_minute 20 --global_domain https://api.example.com
+python3 simulator.py --file payload-sample.json --requests_per_minute 20 --global_domain https://api.example.com
 ```
 
 ### 2. Changing the Duration in Minutes
@@ -48,7 +48,7 @@ python simulator.py --file payload-sample.json --requests_per_minute 20 --global
 To change the duration for which the script will send requests, use the `--duration_minutes` argument.
 
 ```bash
-python simulator.py --file payload-sample.json --duration_minutes 10 --global_domain https://api.example.com
+python3 simulator.py --file payload-sample.json --duration_minutes 10 --global_domain https://api.example.com
 ```
 
 ### 3. Specifying a Global Domain
@@ -56,7 +56,7 @@ python simulator.py --file payload-sample.json --duration_minutes 10 --global_do
 To specify a global domain that will be prepended to URLs without a domain, use the `--global_domain` argument.
 
 ```bash
-python simulator.py --file payload-sample.json --global_domain https://api.example.com
+python3 simulator.py --file payload-sample.json --global_domain https://api.example.com
 ```
 
 ### 4. Changing the Concurrency Level
@@ -64,7 +64,7 @@ python simulator.py --file payload-sample.json --global_domain https://api.examp
 To change the number of concurrent requests, use the `--concurrency` argument.
 
 ```bash
-python simulator.py --file payload-sample.json --concurrency 20 --global_domain https://api.example.com
+python3 simulator.py --file payload-sample.json --concurrency 20 --global_domain https://api.example.com
 ```
 
 ### 5. Combining Multiple Arguments
@@ -72,5 +72,6 @@ python simulator.py --file payload-sample.json --concurrency 20 --global_domain 
 You can combine multiple arguments to customize the script's behavior according to your needs.
 
 ```bash
-python simulator.py --file payload-sample.json --requests_per_minute 30 --duration_minutes 10 --global_domain https://api.example.com --concurrency 20
+python3 simulator.py --file payload-sample.json --requests_per_minute 30 --duration_minutes 10 --global_domain https://api.example.com --concurrency 20
 ```
+
