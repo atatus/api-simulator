@@ -6,7 +6,7 @@ Simulate API requests based on sample api data.
 
 This sample JSON file `payload-sample.json` demonstrates how to structure requests for different HTTP methods, including GET and POST, with placeholders in the URL path that will be replaced with fake data by the script. The `headers` and `body` fields are optional and can be used to customize the request headers and body content.
 
-* Create a Virtual Environment and Install python3 dependencies
+* Create a Virtual Environment and Install python dependencies
 
 ```bash
 python3 -m venv env
