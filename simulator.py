@@ -2,7 +2,10 @@ import argparse
 import grequests
 import json
 import os
+import re
 from faker import Faker
+import time
+from urllib.parse import urlparse, urlunparse
 
 # Initialize the Faker generator
 fake = Faker()
@@ -24,7 +27,7 @@ def generate_fake_data(request):
     fake_params = {}
 
     # Generate fake data for body
-    if request['body']:
+    if 'body' in request and request['body']:
         for key, value in request['body'].items():
             if isinstance(value, str):
                 fake_body[key] = fake.name() if 'name' in key else fake.address()
@@ -35,7 +38,7 @@ def generate_fake_data(request):
             # Add more conditions here if needed for other value types
 
     # Generate fake data for query parameters
-    if request['params']:
+    if 'params' in request and request['params']:
         for key, value in request['params'].items():
             if isinstance(value, str):
                 fake_params[key] = fake.name() if 'name' in key else fake.address()
@@ -83,9 +86,9 @@ def send_requests(urls, requests_per_minute, duration_minutes, global_domain, co
             if not url.startswith('http'):
                 url = f"{global_domain}{url}"
             url = replace_placeholders_in_url(url)
-            headers = request['headers']
-            body = request['body']
-            params = request['params']
+            headers = request.get('headers', {})
+            body = request.get('body', '')
+            params = request.get('params', {})
 
             # Generate fake data for this request
             fake_body, fake_params = generate_fake_data(request)
@@ -125,17 +128,25 @@ def send_requests(urls, requests_per_minute, duration_minutes, global_domain, co
 
         # Handle responses
         for response in responses:
-            # Handle response based on Content-Type
-            content_type = response.headers.get('Content-Type')
-            if 'application/json' in content_type:
-                data = response.json()
-            elif 'text/html' in content_type:
-                data = response.text
-            else:
-                data = response.content
+            if response is not None:
+                # Handle response based on Content-Type
+                content_type = ''
+                if 'headers' in response:
+                    headers = response['headers']
+                    if headers is not None:
+                        content_type = headers.get('Content-Type', '')
 
-            print(f"Response for {response.url}: {response.status_code}")
-            print(data)
+                if 'application/json' in content_type:
+                    data = response.json()
+                elif 'text/html' in content_type:
+                    data = response.text
+                else:
+                    data = response.content
+
+                print(f"Response for {response.url}: {response.status_code}")
+                # print(data)
+            # else:
+            #     # print(f"Empty Response!")
 
         # Sleep to maintain the specified rate of requests
         time.sleep(requests_interval)
@@ -144,7 +155,7 @@ def send_requests(urls, requests_per_minute, duration_minutes, global_domain, co
 parser = argparse.ArgumentParser(description='Send requests with fake data.')
 parser.add_argument('--file', type=validate_file, help='File containing URLs in JSON format.')
 parser.add_argument('--requests_per_minute', type=int, default=60, help='Number of requests per minute.')
-parser.add_argument('--duration_minutes', type=int, default=1, help='Duration in minutes.')
+parser.add_argument('--duration_minutes', type=int, default=2, help='Duration in minutes.')
 parser.add_argument('--global_domain', type=str, default='', help='Global domain to prepend to URLs without a domain.')
 parser.add_argument('--concurrency', type=int, default=1, help='Number of concurrent requests.')
 args = parser.parse_args()
