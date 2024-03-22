@@ -1,0 +1,49 @@
+[
+ {
+    "method": "GET",
+    "url": "/users/:userId/orders/:orderId",
+    "headers": {
+      "Authorization": "Bearer your_token_here"
+    },
+    "params": {
+      "expand": "true"
+    }
+ },
+ {
+    "method": "POST",
+    "url": "/users/:userId/orders",
+    "headers": {
+    },
+    "body": {
+      "productId": "123",
+      "quantity": 2
+    }
+ },
+ {
+    "method": "PUT",
+    "url": "/users/:userId/profile",
+    "headers": {
+    },
+    "body": {
+      "name": "John Doe",
+      "email": "john.doe@example.com"
+    }
+ },
+ {
+    "method": "DELETE",
+    "url": "/users/:userId/orders/:orderId",
+    "headers": {
+      "Authorization": "Bearer your_token_here"
+    }
+ },
+ {
+    "method": "GET",
+    "url": "http://localhost:8080/users/:userId",
+    "headers": {
+    },
+    "params": {
+      "skip": true,
+      "limit": 20
+    }
+  }
+]

@@ -1,0 +1,4 @@
+argparse==1.4.0
+grequests==0.6.0
+faker==4.1.0
+urllib3==1.26.7
